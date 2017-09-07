@@ -1,10 +1,27 @@
 # BABBLE
-## Consensus platform for distributed applications.  
 
-Nodes in a distributed application require a component to communicate transactions  
-between all participants before processing them locally in a consistent order.  
-Babble is a plug and play solution for this component.  It uses the Hashgraph   
-consensus algorithm which offers definitive advantages over other BFT systems.
+> The algorithm implemented by this software is protected under US patents
+> 9646029, 9529923 and 9390154. Licensing agreement with the respective patent
+> assignee shall be obtained upon deployment of the Software.
+
+## Introduction
+
+This is an implementation of the hashgraph consensus algorithm called Babble.
+
+Before continuing, please familiarize yourself with the concepts described in
+the [white-paper](http://www.swirlds.com/downloads/SWIRLDS-TR-2016-01.pdf)  
+and its [accompanying document](http://www.swirlds.com/downloads/SWIRLDS-TR-2016-02.pdf). 
+
+The Hashgraph is a data structure that contains all the information about  
+the history of gossip and thereby grows and grows in size as gossip spreads.  
+There are various strategies to keep the size of the Hashgraph limited. In our  
+implementation, the **Hashgraph** object has a dependency on a **Store** object  
+which contains the actual data and is abstracted behind an interface.
+
+The current implementation of the **Store** interface uses a set of in-memory LRU  
+caches which can be extended to persist stale items to disk. The size of the LRU  
+caches is configurable.
+
 
 ## Architecture
 ```
@@ -174,12 +191,12 @@ the programming language and a CLI tool for managing Go code. Go is very opinion
 and will require you to [define a workspace](https://golang.org/doc/code.html#Workspaces) where all your go code will reside. 
 
 ### Babble and dependencies  
-Clone the [repository](https://bitbucket.org/mosaicnet/babble) in the appropriate GOPATH subdirectory:
+Clone the [repository](https://bitbucket.org/hashgraph/hashgraph) in the appropriate GOPATH subdirectory:
 
 ```bash
 $ mkdir -p $GOPATH/src/bitbucket.org/mosaicnet/
 $ cd $GOPATH/src/bitbucket.org/mosaicnet
-[...]/mosaicnet$ git clone https://bitbucket.org/mosaicnet/babble.git
+[...]/mosaicnet$ git clone https://bitbucket.org/hashgraph/hashgraph.git
 ```
 Babble uses [Glide](http://github.com/Masterminds/glide) to manage dependencies.
 
@@ -199,14 +216,14 @@ Babble has extensive unit-testing. Use the Go tool to run tests:
 
 If everything goes well, it should output something along these lines:  
 ```
-ok      bitbucket.org/mosaicnet/babble/net      0.052s
-ok      bitbucket.org/mosaicnet/babble/common   0.011s
-?       bitbucket.org/mosaicnet/babble/cmd      [no test files]
-?       bitbucket.org/mosaicnet/babble/cmd/dummy_client [no test files]
-ok      bitbucket.org/mosaicnet/babble/hashgraph        0.174s
-ok      bitbucket.org/mosaicnet/babble/node     1.699s
-ok      bitbucket.org/mosaicnet/babble/proxy    0.018s
-ok      bitbucket.org/mosaicnet/babble/crypto   0.028s
+ok      bitbucket.org/hashgraph/hashgraph/net      0.052s
+ok      bitbucket.org/hashgraph/hashgraph/common   0.011s
+?       bitbucket.org/hashgraph/hashgraph/cmd      [no test files]
+?       bitbucket.org/hashgraph/hashgraph/cmd/dummy_client [no test files]
+ok      bitbucket.org/hashgraph/hashgraph/hashgraph        0.174s
+ok      bitbucket.org/hashgraph/hashgraph/node     1.699s
+ok      bitbucket.org/hashgraph/hashgraph/proxy    0.018s
+ok      bitbucket.org/hashgraph/hashgraph/crypto   0.028s
 ```
 
 ### Docker Testnet
@@ -286,3 +303,27 @@ number of nodes in a subnet and starts Babble on them.
 [...]/babble/terraform$ ssh -i babble.pem ubuntu@[public ip] # ssh into a node
 [...]/babble/terraform$ make destroy #destroy resources
 ``` 
+
+## LICENSE
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above permission notice shall be included in all copies or substantial
+portions of the Software.
+
+The algorithm implemented by this software is protected under US patents
+9646029, 9529923 and 9390154. Licensing agreement with the respective patent
+hoders shall be obtained upon deployment of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.

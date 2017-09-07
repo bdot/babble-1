@@ -4,7 +4,7 @@ import (
 	"testing"
 	"time"
 
-	"bitbucket.org/mosaicnet/babble/common"
+	"bitbucket.org/hashgraph/hashgraph/common"
 	"github.com/Sirupsen/logrus"
 )
 

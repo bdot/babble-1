@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	"bitbucket.org/mosaicnet/babble/crypto"
+	"bitbucket.org/hashgraph/hashgraph/crypto"
 )
 
 func createDummyEventBody() EventBody {

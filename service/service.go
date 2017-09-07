@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"bitbucket.org/mosaicnet/babble/node"
+	"bitbucket.org/hashgraph/hashgraph/node"
 	"github.com/Sirupsen/logrus"
 )
 

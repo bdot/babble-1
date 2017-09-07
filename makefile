@@ -1,6 +1,6 @@
 
 install: 
-	go install bitbucket.org/mosaicnet/babble/cmd/babble
+	go install bitbucket.org/hashgraph/hashgraph/cmd/babble
 test: 
 	glide novendor | xargs go test
 

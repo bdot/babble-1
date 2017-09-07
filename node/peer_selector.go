@@ -3,7 +3,7 @@ package node
 import (
 	"math/rand"
 
-	"bitbucket.org/mosaicnet/babble/net"
+	"bitbucket.org/hashgraph/hashgraph/net"
 )
 
 type PeerSelector interface {

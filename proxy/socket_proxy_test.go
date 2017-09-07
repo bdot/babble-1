@@ -5,8 +5,8 @@ import (
 	"testing"
 	"time"
 
-	"bitbucket.org/mosaicnet/babble/common"
-	aproxy "bitbucket.org/mosaicnet/babble/proxy/app"
+	"bitbucket.org/hashgraph/hashgraph/common"
+	aproxy "bitbucket.org/hashgraph/hashgraph/proxy/app"
 )
 
 func TestSokcetProxyServer(t *testing.T) {

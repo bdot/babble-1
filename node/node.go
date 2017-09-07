@@ -12,9 +12,9 @@ import (
 
 	"strconv"
 
-	hg "bitbucket.org/mosaicnet/babble/hashgraph"
-	"bitbucket.org/mosaicnet/babble/net"
-	"bitbucket.org/mosaicnet/babble/proxy"
+	hg "bitbucket.org/hashgraph/hashgraph/hashgraph"
+	"bitbucket.org/hashgraph/hashgraph/net"
+	"bitbucket.org/hashgraph/hashgraph/proxy"
 )
 
 type Node struct {

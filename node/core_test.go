@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"testing"
 
-	"bitbucket.org/mosaicnet/babble/common"
-	"bitbucket.org/mosaicnet/babble/crypto"
-	hg "bitbucket.org/mosaicnet/babble/hashgraph"
+	"bitbucket.org/hashgraph/hashgraph/common"
+	"bitbucket.org/hashgraph/hashgraph/crypto"
+	hg "bitbucket.org/hashgraph/hashgraph/hashgraph"
 )
 
 func TestInit(t *testing.T) {

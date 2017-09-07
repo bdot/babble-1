@@ -11,14 +11,13 @@ import (
 	_ "net/http/pprof"
 
 	"github.com/Sirupsen/logrus"
-	"gopkg.in/urfave/cli.v1"
 
-	"bitbucket.org/mosaicnet/babble/crypto"
-	"bitbucket.org/mosaicnet/babble/net"
-	"bitbucket.org/mosaicnet/babble/node"
-	"bitbucket.org/mosaicnet/babble/proxy"
-	aproxy "bitbucket.org/mosaicnet/babble/proxy/app"
-	"bitbucket.org/mosaicnet/babble/service"
+	"bitbucket.org/hashgraph/hashgraph/crypto"
+	"bitbucket.org/hashgraph/hashgraph/net"
+	"bitbucket.org/hashgraph/hashgraph/node"
+	"bitbucket.org/hashgraph/hashgraph/proxy"
+	aproxy "bitbucket.org/hashgraph/hashgraph/proxy/app"
+	"bitbucket.org/hashgraph/hashgraph/service"
 )
 
 var (

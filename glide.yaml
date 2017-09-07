@@ -1,4 +1,4 @@
-package: bitbucket.org/mosaicnet/babble
+package: bitbucket.org/hashgraph/hashgraph
 import:
 - package: github.com/Sirupsen/logrus
 - package: gopkg.in/urfave/cli.v1

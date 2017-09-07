@@ -1,6 +1,6 @@
 package hashgraph
 
-import "bitbucket.org/mosaicnet/babble/common"
+import "bitbucket.org/hashgraph/hashgraph/common"
 
 type Key struct {
 	x string
