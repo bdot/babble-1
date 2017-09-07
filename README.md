@@ -318,7 +318,7 @@ portions of the Software.
 
 The algorithm implemented by this software is protected under US patents
 9646029, 9529923 and 9390154. Licensing agreement with the respective patent
-hoders must be obtained before deployment of the Software.
+hoders will be obtained before deployment of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
