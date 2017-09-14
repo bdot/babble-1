@@ -10,19 +10,18 @@ import (
 	"time"
 
 	"github.com/Sirupsen/logrus"
-	"bitbucket.org/hashgraph/hashgraph/common"
-	"bitbucket.org/hashgraph/hashgraph/crypto"
-	"bitbucket.org/hashgraph/hashgraph/net"
-	aproxy "bitbucket.org/hashgraph/hashgraph/proxy/app"
+	"github.com/hashgraph/babble/common"
+	"github.com/hashgraph/babble/crypto"
+	"github.com/hashgraph/babble/net"
+	aproxy "github.com/hashgraph/babble/proxy/app"
 )
 
 var ip = 9990
 
-func initPeers() ([]*ecdsa.PrivateKey, []net.Peer) {
+func initPeers(n int) ([]*ecdsa.PrivateKey, []net.Peer) {
 	keys := []*ecdsa.PrivateKey{}
 	peers := []net.Peer{}
 
-	n := 3
 	for i := 0; i < n; i++ {
 		key, _ := crypto.GenerateECDSAKey()
 		keys = append(keys, key)
@@ -37,7 +36,7 @@ func initPeers() ([]*ecdsa.PrivateKey, []net.Peer) {
 }
 
 func TestProcessSync(t *testing.T) {
-	keys, peers := initPeers()
+	keys, peers := initPeers(2)
 	testLogger := common.NewTestLogger(t)
 
 	//Start two nodes
@@ -69,7 +68,7 @@ func TestProcessSync(t *testing.T) {
 	node0Known := node0.core.Known()
 	node1Known := node1.core.Known()
 
-	head, unknown, err := node1.core.Diff(node0Known)
+	unknown, err := node1.core.Diff(node0Known)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -85,7 +84,6 @@ func TestProcessSync(t *testing.T) {
 	}
 	expectedResp := net.SyncResponse{
 		From:   node1.localAddr,
-		Head:   head,
 		Events: unknownWire,
 		Known:  node1Known,
 	}
@@ -100,10 +98,6 @@ func TestProcessSync(t *testing.T) {
 	// Verify the response
 	if expectedResp.From != out.From {
 		t.Fatalf("SyncResponse.From should be %s, not %s", expectedResp.From, out.From)
-	}
-
-	if expectedResp.Head != out.Head {
-		t.Fatalf("SyncResponse.Head should be %s, not %s", expectedResp.Head, out.Head)
 	}
 
 	if l := len(out.Events); l != len(expectedResp.Events) {
@@ -128,7 +122,7 @@ func TestProcessSync(t *testing.T) {
 }
 
 func TestProcessEagerSync(t *testing.T) {
-	keys, peers := initPeers()
+	keys, peers := initPeers(2)
 	testLogger := common.NewTestLogger(t)
 
 	//Start two nodes
@@ -159,7 +153,7 @@ func TestProcessEagerSync(t *testing.T) {
 
 	node1Known := node1.core.Known()
 
-	head, unknown, err := node0.core.Diff(node1Known)
+	unknown, err := node0.core.Diff(node1Known)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -171,10 +165,10 @@ func TestProcessEagerSync(t *testing.T) {
 
 	args := net.EagerSyncRequest{
 		From:   node0.localAddr,
-		Head:   head,
 		Events: unknownWire,
 	}
 	expectedResp := net.EagerSyncResponse{
+		From:    node1.localAddr,
 		Success: true,
 	}
 
@@ -195,7 +189,7 @@ func TestProcessEagerSync(t *testing.T) {
 }
 
 func TestAddTransaction(t *testing.T) {
-	keys, peers := initPeers()
+	keys, peers := initPeers(2)
 	testLogger := common.NewTestLogger(t)
 
 	//Start two nodes
@@ -242,7 +236,7 @@ func TestAddTransaction(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	if err := node0.sync(out.Head, out.Events); err != nil {
+	if err := node0.sync(out.Events); err != nil {
 		t.Fatal(err)
 	}
 
@@ -265,10 +259,10 @@ func TestAddTransaction(t *testing.T) {
 	node1.Shutdown()
 }
 
-func initNodes(logger *logrus.Logger) ([]*ecdsa.PrivateKey, []*Node) {
+func initNodes(n int, logger *logrus.Logger) ([]*ecdsa.PrivateKey, []*Node) {
 	conf := NewConfig(5*time.Millisecond, time.Second, 1000, logger)
 
-	keys, peers := initPeers()
+	keys, peers := initPeers(n)
 	nodes := []*Node{}
 	proxies := []*aproxy.InmemAppProxy{}
 	for i := 0; i < len(peers); i++ {
@@ -313,19 +307,19 @@ func getCommittedTransactions(n *Node) ([][]byte, error) {
 
 func TestGossip(t *testing.T) {
 	logger := common.NewTestLogger(t)
-	_, nodes := initNodes(logger)
+	_, nodes := initNodes(4, logger)
 
 	gossip(nodes, 100)
 
-	consEvents := [][]string{}
-	consTransactions := [][][]byte{}
+	consEvents := map[int][]string{}
+	consTransactions := map[int][][]byte{}
 	for _, n := range nodes {
-		consEvents = append(consEvents, n.core.GetConsensusEvents())
+		consEvents[n.id] = n.core.GetConsensusEvents()
 		nodeTxs, err := getCommittedTransactions(n)
 		if err != nil {
 			t.Fatal(err)
 		}
-		consTransactions = append(consTransactions, nodeTxs)
+		consTransactions[n.id] = nodeTxs
 	}
 
 	minE := len(consEvents[0])
@@ -339,13 +333,22 @@ func TestGossip(t *testing.T) {
 		}
 	}
 
+	problem := false
 	t.Logf("min consensus events: %d", minE)
 	for i, e := range consEvents[0][0:minE] {
 		for j := range nodes[1:len(nodes)] {
-			if consEvents[j][i] != e {
-				t.Fatalf("nodes[%d].Consensus[%d] and nodes[0].Consensus[%d] are not equal", j, i, i)
+			if f := consEvents[j][i]; f != e {
+				er := nodes[0].core.hg.Round(e)
+				err := nodes[0].core.hg.RoundReceived(e)
+				fr := nodes[j].core.hg.Round(f)
+				frr := nodes[j].core.hg.RoundReceived(f)
+				t.Logf("nodes[%d].Consensus[%d] (%s, Round %d, Received %d) and nodes[0].Consensus[%d] (%s, Round %d, Received %d) are not equal", j, i, e[:6], er, err, i, f[:6], fr, frr)
+				problem = true
 			}
 		}
+	}
+	if problem {
+		t.Fatal()
 	}
 
 	t.Logf("min consensus transactions: %d", minT)
@@ -378,7 +381,6 @@ func gossip(nodes []*Node, target int) {
 			break
 		}
 	}
-
 	close(quit)
 	shutdownNodes(nodes)
 }
@@ -413,7 +415,7 @@ func makeRandomTransactions(nodes []*Node, quit chan int) {
 func BenchmarkGossip(b *testing.B) {
 	logger := common.NewBenchmarkLogger(b)
 	for n := 0; n < b.N; n++ {
-		_, nodes := initNodes(logger)
+		_, nodes := initNodes(3, logger)
 		gossip(nodes, 5)
 	}
 }
