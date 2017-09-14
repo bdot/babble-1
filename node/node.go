@@ -12,9 +12,9 @@ import (
 
 	"strconv"
 
-	hg "bitbucket.org/hashgraph/hashgraph/hashgraph"
-	"bitbucket.org/hashgraph/hashgraph/net"
-	"bitbucket.org/hashgraph/hashgraph/proxy"
+	hg "github.com/hashgraph/babble/hashgraph"
+	"github.com/hashgraph/babble/net"
+	"github.com/hashgraph/babble/proxy"
 )
 
 type Node struct {

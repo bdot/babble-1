@@ -4,7 +4,7 @@ import (
 	"net"
 	"testing"
 
-	"bitbucket.org/hashgraph/hashgraph/common"
+	"github.com/hashgraph/babble/common"
 )
 
 func TestTCPTransport_BadAddr(t *testing.T) {

@@ -191,12 +191,12 @@ the programming language and a CLI tool for managing Go code. Go is very opinion
 and will require you to [define a workspace](https://golang.org/doc/code.html#Workspaces) where all your go code will reside. 
 
 ### Babble and dependencies  
-Clone the [repository](https://bitbucket.org/hashgraph/hashgraph) in the appropriate GOPATH subdirectory:
+Clone the [repository](https://github.com/hashgraph/babble) in the appropriate GOPATH subdirectory:
 
 ```bash
 $ mkdir -p $GOPATH/src/bitbucket.org/mosaicnet/
 $ cd $GOPATH/src/bitbucket.org/mosaicnet
-[...]/mosaicnet$ git clone https://bitbucket.org/hashgraph/hashgraph.git
+[...]/mosaicnet$ git clone https://github.com/hashgraph/babble.git
 ```
 Babble uses [Glide](http://github.com/Masterminds/glide) to manage dependencies.
 
@@ -216,14 +216,14 @@ Babble has extensive unit-testing. Use the Go tool to run tests:
 
 If everything goes well, it should output something along these lines:  
 ```
-ok      bitbucket.org/hashgraph/hashgraph/net      0.052s
-ok      bitbucket.org/hashgraph/hashgraph/common   0.011s
-?       bitbucket.org/hashgraph/hashgraph/cmd      [no test files]
-?       bitbucket.org/hashgraph/hashgraph/cmd/dummy_client [no test files]
-ok      bitbucket.org/hashgraph/hashgraph/hashgraph        0.174s
-ok      bitbucket.org/hashgraph/hashgraph/node     1.699s
-ok      bitbucket.org/hashgraph/hashgraph/proxy    0.018s
-ok      bitbucket.org/hashgraph/hashgraph/crypto   0.028s
+ok      github.com/hashgraph/babble/net      0.052s
+ok      github.com/hashgraph/babble/common   0.011s
+?       github.com/hashgraph/babble/cmd      [no test files]
+?       github.com/hashgraph/babble/cmd/dummy_client [no test files]
+ok      github.com/hashgraph/babble/hashgraph        0.174s
+ok      github.com/hashgraph/babble/node     1.699s
+ok      github.com/hashgraph/babble/proxy    0.018s
+ok      github.com/hashgraph/babble/crypto   0.028s
 ```
 
 ### Docker Testnet

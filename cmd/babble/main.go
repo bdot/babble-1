@@ -12,12 +12,12 @@ import (
 
 	"github.com/Sirupsen/logrus"
 
-	"bitbucket.org/hashgraph/hashgraph/crypto"
-	"bitbucket.org/hashgraph/hashgraph/net"
-	"bitbucket.org/hashgraph/hashgraph/node"
-	"bitbucket.org/hashgraph/hashgraph/proxy"
-	aproxy "bitbucket.org/hashgraph/hashgraph/proxy/app"
-	"bitbucket.org/hashgraph/hashgraph/service"
+	"github.com/hashgraph/babble/crypto"
+	"github.com/hashgraph/babble/net"
+	"github.com/hashgraph/babble/node"
+	"github.com/hashgraph/babble/proxy"
+	aproxy "github.com/hashgraph/babble/proxy/app"
+	"github.com/hashgraph/babble/service"
 )
 
 var (

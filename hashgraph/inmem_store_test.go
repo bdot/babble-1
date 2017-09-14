@@ -5,7 +5,7 @@ import (
 	"reflect"
 	"testing"
 
-	"bitbucket.org/hashgraph/hashgraph/crypto"
+	"github.com/hashgraph/babble/crypto"
 )
 
 type pub struct {

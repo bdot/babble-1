@@ -13,8 +13,8 @@ import (
 
 	"math"
 
-	"bitbucket.org/hashgraph/hashgraph/common"
-	"bitbucket.org/hashgraph/hashgraph/crypto"
+	"github.com/hashgraph/babble/common"
+	"github.com/hashgraph/babble/crypto"
 )
 
 var (

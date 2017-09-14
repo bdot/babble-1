@@ -6,8 +6,8 @@ import (
 	"testing"
 	"time"
 
-	"bitbucket.org/hashgraph/hashgraph/common"
-	"bitbucket.org/hashgraph/hashgraph/hashgraph"
+	"github.com/hashgraph/babble/common"
+	"github.com/hashgraph/babble/hashgraph"
 )
 
 func TestNetworkTransport_StartStop(t *testing.T) {

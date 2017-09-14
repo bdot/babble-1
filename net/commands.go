@@ -1,6 +1,6 @@
 package net
 
-import "bitbucket.org/hashgraph/hashgraph/hashgraph"
+import "github.com/hashgraph/babble/hashgraph"
 
 type SyncRequest struct {
 	From  string

@@ -7,7 +7,7 @@ import (
 	"time"
 
 	"github.com/Sirupsen/logrus"
-	bproxy "bitbucket.org/hashgraph/hashgraph/proxy/babble"
+	bproxy "github.com/hashgraph/babble/proxy/babble"
 )
 
 type State struct {

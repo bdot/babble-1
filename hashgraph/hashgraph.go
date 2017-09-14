@@ -9,7 +9,7 @@ import (
 
 	"github.com/Sirupsen/logrus"
 
-	"bitbucket.org/hashgraph/hashgraph/common"
+	"github.com/hashgraph/babble/common"
 )
 
 type Decision struct {
