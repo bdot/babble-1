@@ -194,8 +194,8 @@ and will require you to [define a workspace](https://golang.org/doc/code.html#Wo
 Clone the [repository](https://github.com/hashgraph/babble) in the appropriate GOPATH subdirectory:
 
 ```bash
-$ mkdir -p $GOPATH/src/bitbucket.org/mosaicnet/
-$ cd $GOPATH/src/bitbucket.org/mosaicnet
+$ mkdir -p $GOPATH/src/github.com/hashgraph/
+$ cd $GOPATH/src/github.com/hashgraph
 [...]/mosaicnet$ git clone https://github.com/hashgraph/babble.git
 ```
 Babble uses [Glide](http://github.com/Masterminds/glide) to manage dependencies.
