@@ -1,5 +1,8 @@
 # BABBLE
 
+> This is a fork of the original Babble codebase which is now private.  
+> The company behing  [Babble.io](https://babble.io) continues development in a private repository.
+
 > The algorithm implemented by this software is protected by US patents
 > 9646029, 9529923 and 9390154. Licensing agreement with the respective patent
 > holders must be obtained before deployment.
